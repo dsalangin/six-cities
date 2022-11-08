@@ -8,7 +8,7 @@ type PrivateRouteProps = {
   children: JSX.Element;
 }
 
-function FavoutitePrivateRoute(props: PrivateRouteProps) {
+function FavoritePrivateRoute(props: PrivateRouteProps) {
   const {authorizationStatus, children} = props;
 
   return (
@@ -16,4 +16,4 @@ function FavoutitePrivateRoute(props: PrivateRouteProps) {
   );
 }
 
-export default FavoutitePrivateRoute;
+export default FavoritePrivateRoute;
