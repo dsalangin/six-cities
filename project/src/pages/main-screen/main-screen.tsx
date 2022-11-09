@@ -1,4 +1,4 @@
-import OfferList from '../offer-list/offer-list';
+import OfferList from '../../components/offer-list/offer-list';
 import {Offer} from '../../types/offer';
 
 

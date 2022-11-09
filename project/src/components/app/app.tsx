@@ -1,11 +1,11 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
-import MainScreen from '../main-screen/main-screen';
-import LoginScreen from '../login-screen/login-screen';
+import MainScreen from '../../pages/main-screen/main-screen';
+import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritePrivateRoute from '../favorite-private-route/favorite-private-route';
-import FavoritesScreen from '../favorites-screen/faveorites-screen';
-import PropertyScreen from '../property-screen/property-screen';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
+import FavoritesScreen from '../../pages/favorites-screen/faveorites-screen';
+import PropertyScreen from '../../pages/property-screen/property-screen';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {Offer} from '../../types/offer';
 

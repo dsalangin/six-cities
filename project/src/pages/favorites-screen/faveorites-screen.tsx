@@ -1,5 +1,5 @@
 import {Offer} from '../../types/offer';
-import FavoriteOfferCard from '../favourite-offer-card/favourite-offer-card';
+import FavoriteOfferCard from '../../components/favourite-offer-card/favourite-offer-card';
 
 type FavoritesScreenProps = {
   offers: Offer[];
