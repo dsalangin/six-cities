@@ -1,12 +1,21 @@
+import {useState} from 'react';
 import OfferList from '../../components/offer-list/offer-list';
 import {Offer} from '../../types/offer';
-
+import Map from '../../components/map/map';
+import {CITY} from '../../mocks/city';
 
 type MainScreenProps = {
   offers: Offer[];
 }
 
 function MainScreen ({offers}: MainScreenProps): JSX.Element {
+  const [selectedOffer, setSelectedOffer] = useState<Offer>();
+
+  const onListItemHover = (listItemId: number) => {
+    const currentPoint = offers.find((offer) => offer.id === listItemId);
+    setSelectedOffer(currentPoint);
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -95,10 +104,12 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferList offers={offers}/>
+              <OfferList offers={offers} onListItemHover={onListItemHover}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={CITY} offers={offers} selectedOffer={selectedOffer}/>
+              </section>
             </div>
           </div>
         </div>

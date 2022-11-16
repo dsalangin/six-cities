@@ -1,16 +1,15 @@
-import {useState} from 'react';
 import type {Offer} from '../../types/offer';
 import OfferCard from '../offer-card/offer-card';
 
 type OfferListProps = {
   offers: Offer[];
+  onListItemHover: (id: number) => void;
 }
 
-function OfferList({offers}: OfferListProps): JSX.Element {
-  const [, setActive] = useState(0);
+function OfferList({offers, onListItemHover}: OfferListProps): JSX.Element {
 
   function changeSetActive(id: number) {
-    setActive(id);
+    onListItemHover?.(id);
   }
 
   return (
