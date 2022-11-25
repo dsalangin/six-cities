@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import OfferList from '../../components/offer-list/offer-list';
 import {Offer} from '../../types/offer';
 import Map from '../../components/map/map';
@@ -15,6 +15,12 @@ type MainScreenProps = {
 function MainScreen ({offers}: MainScreenProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
   const [currentSort, setCurrentSort] = useState<string>('Popular');
+  const [sortedOffers, setSortedOffers] = useState<Offer[]>([]);
+
+  const offerFromStore = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector((state) => state.city);
+  const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
+  const filteredOffers = useMemo(() => offerFromStore.filter((offer) => offer.city.name === currentCity), [offerFromStore, currentCity]);
 
   const dispatch = useAppDispatch();
 
@@ -22,19 +28,32 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
     dispatch(setOffers(offers));
   }, []);
 
-  const currentCity = useAppSelector((state) => state.city);
-  const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
-  const filteredOffers = useAppSelector((state) => state.offers.filter((offer) => offer.city.name === currentCity));
+  const changeSetSort = (type: string) => {
+    setCurrentSort(type);
+  };
 
+  const sortingOffers = (copyOffers: Offer[]) => {
+    switch (currentSort) {
+      case SortType.PRICELOWTOHIGHT:
+        return copyOffers.sort((a, b) => a.price - b.price);
+      case SortType.PRICEHIGHTTOLOW:
+        return copyOffers.sort((a, b) => b.price - a.price);
+      case SortType.RAITING:
+        return copyOffers.sort((a, b) => a.rating - b.rating);
+      case SortType.POPULAR:
+        return copyOffers;
+    }
+  };
+
+  useEffect(() => {
+    const sorted = sortingOffers([...filteredOffers]);
+    setSortedOffers(sorted ?? []);
+  }, [currentSort, filteredOffers]);
 
   const onListItemHover = (listItemId: number) => {
     const currentPoint = offers.find((offer) => offer.id === listItemId);
     setSelectedOffer(currentPoint);
   };
-
-  const changeSetSort = (type: string) => {
-    setCurrentSort(type);
-  }
 
   return (
     <div className="page page--gray page--main">
@@ -79,7 +98,7 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
               <SortOptions sortType={SortType} currentSort={currentSort} changeSetSort={changeSetSort}/>
-              <OfferList offers={filteredOffers} onListItemHover={onListItemHover}/>
+              <OfferList offers={sortedOffers} onListItemHover={onListItemHover}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
