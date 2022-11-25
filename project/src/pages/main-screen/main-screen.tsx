@@ -3,9 +3,10 @@ import OfferList from '../../components/offer-list/offer-list';
 import {Offer} from '../../types/offer';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
-import {CITIES} from '../../const';
+import {CITIES, SortType} from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setOffers } from '../../store/action';
+import SortOptions from '../../components/sort-options/sort-options';
 
 type MainScreenProps = {
   offers: Offer[];
@@ -13,6 +14,7 @@ type MainScreenProps = {
 
 function MainScreen ({offers}: MainScreenProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
+  const [currentSort, setCurrentSort] = useState<string>('Popular');
 
   const dispatch = useAppDispatch();
 
@@ -29,6 +31,10 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
     const currentPoint = offers.find((offer) => offer.id === listItemId);
     setSelectedOffer(currentPoint);
   };
+
+  const changeSetSort = (type: string) => {
+    setCurrentSort(type);
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -72,21 +78,7 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
+              <SortOptions sortType={SortType} currentSort={currentSort} changeSetSort={changeSetSort}/>
               <OfferList offers={filteredOffers} onListItemHover={onListItemHover}/>
             </section>
             <div className="cities__right-section">

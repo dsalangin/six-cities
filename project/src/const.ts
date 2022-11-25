@@ -40,6 +40,14 @@ const CITIES = [
     lat: 51.23192226557335,
     lng: 6.770396652909783,
     zoom: 10
-  }];
+  }
+];
 
-export {AppRoute, AuthorizationStatus, CITIES};
+const SortType = {
+  POPULAR: 'Popular',
+  PRICELOWTOHIGHT: 'Price: low to high',
+  PRICEHIGHTTOLOW: 'Price: high to low',
+  RAITING: 'Top rated first',
+};
+
+export {AppRoute, AuthorizationStatus, CITIES, SortType};
