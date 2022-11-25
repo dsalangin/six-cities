@@ -141,6 +141,42 @@ const offers: Offer[] = [
     type: 'apartment'
   },
 
+  {
+    bedrooms: 3,
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.864716,
+        longitude: 2.349014,
+        zoom: 10
+      },
+    },
+    description: 'A quiet cozy and picturesque that hides behind a a river by theunique lightness of Amsterdam.',
+    goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine','Dishwasher'],
+    host: {
+      avatarUrl: 'img/1.png',
+      id: 3,
+      isPro: true,
+      name: 'Angelina',
+    },
+    id: 4,
+    images: ['img/1.png', 'img/2.png'],
+    isFavorite: false,
+    isPremium : false,
+    location: {
+      latitude: 48.85612303673775,
+      longitude: 2.3549292541869713,
+      zoom: 8
+    },
+    maxAdults: 4,
+    previewImage: 'img/apartment-03.jpg',
+    price: 120,
+    rating: 4.8,
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'apartment'
+  },
+
+
 ];
 
 export {offers};

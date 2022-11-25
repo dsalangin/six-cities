@@ -31,6 +31,8 @@ function Map ({city, offers, selectedOffer}: MapProps) {
 
   useEffect(() =>{
     if(map) {
+      map.setView([city.lat, city.lng], city.zoom);
+
       offers.forEach((offer) => {
         leaflet.marker([offer.location.latitude, offer.location.longitude],
           {icon:(offer.id === selectedOffer?.id) ? currentCustomIcon : defaultCustomIcon}

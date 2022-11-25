@@ -1,5 +1,6 @@
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
+// import Map from '../../components/map/map';
 
 function PropertyScreen(): JSX.Element {
 
@@ -36,22 +37,22 @@ function PropertyScreen(): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio"/>
+                <img className="property__image" src="img/room.jpg" alt="studio"/>
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
+                <img className="property__image" src="img/apartment-01.jpg" alt="studio"/>
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio"/>
+                <img className="property__image" src="img/apartment-02.jpg" alt="studio"/>
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio"/>
+                <img className="property__image" src="img/apartment-03.jpg" alt="studio"/>
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio"/>
+                <img className="property__image" src="img/studio-01.jpg" alt="studio"/>
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
+                <img className="property__image" src="img/apartment-01.jpg" alt="studio"/>
               </div>
             </div>
           </div>
@@ -180,7 +181,9 @@ function PropertyScreen(): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            {/* <Map/> */}
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -189,7 +192,7 @@ function PropertyScreen(): JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="#">
-                    <img className="place-card__image" src="./img/room.jpg" width="260" height="200" alt="Place image"/>
+                    <img className="place-card__image" src="./img/room.jpg" width="260" height="200" alt="Place"/>
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -221,7 +224,7 @@ function PropertyScreen(): JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="#">
-                    <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image"/>
+                    <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place"/>
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -253,7 +256,7 @@ function PropertyScreen(): JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="#">
-                    <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place image"/>
+                    <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place"/>
                   </a>
                 </div>
                 <div className="place-card__info">
