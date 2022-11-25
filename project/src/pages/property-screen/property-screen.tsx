@@ -1,8 +1,17 @@
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
-// import Map from '../../components/map/map';
+import {useAppSelector} from '../../hooks';
+import {CITIES} from '../../const';
+import {useParams} from 'react-router-dom';
+import Map from '../../components/map/map';
 
 function PropertyScreen(): JSX.Element {
+  const currentCity = useAppSelector((state) => state.city);
+  const offersFromStore = useAppSelector((state) => state.offers);
+  const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
+  const filteredNearOffers = offersFromStore.filter((offer) => offer.city.name === currentCity);
+  const params = useParams();
+  const [currentOffer] = filteredNearOffers.filter((offer) => String(offer.id) === params.id);
 
   return (
     <div className="page">
@@ -182,7 +191,7 @@ function PropertyScreen(): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            {/* <Map/> */}
+            <Map city={filteredCity} offers={filteredNearOffers} selectedOffer={currentOffer}/>
           </section>
         </section>
         <div className="container">

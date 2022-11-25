@@ -66,7 +66,7 @@ const offers: Offer[] = [
     maxAdults: 4,
     previewImage: 'img/apartment-02.jpg',
     price: 160,
-    rating: 4.8,
+    rating: 3.4,
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment'
   },

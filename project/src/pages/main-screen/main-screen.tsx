@@ -39,7 +39,7 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
       case SortType.PRICEHIGHTTOLOW:
         return copyOffers.sort((a, b) => b.price - a.price);
       case SortType.RAITING:
-        return copyOffers.sort((a, b) => a.rating - b.rating);
+        return copyOffers.sort((a, b) => b.rating - a.rating);
       case SortType.POPULAR:
         return copyOffers;
     }
@@ -98,7 +98,9 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
               <SortOptions sortType={SortType} currentSort={currentSort} changeSetSort={changeSetSort}/>
-              <OfferList offers={sortedOffers} onListItemHover={onListItemHover}/>
+              <div className="cities__places-list places__list tabs__content">
+                <OfferList offers={sortedOffers} onListItemHover={onListItemHover}/>
+              </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
