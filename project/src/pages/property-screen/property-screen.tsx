@@ -6,6 +6,8 @@ import {useParams} from 'react-router-dom';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {reviews} from '../../mocks/review';
+import ReviewList from '../../components/review-list/review-list';
 
 function PropertyScreen(): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
@@ -14,8 +16,6 @@ function PropertyScreen(): JSX.Element {
   const filteredNearOffers = offersFromStore.filter((offer) => offer.city.name === currentCity);
   const params = useParams();
   const [currentOffer] = filteredNearOffers.filter((offer) => String(offer.id) === params.id);
-  const {log} = console;
-  log(currentOffer);
 
   if(!currentOffer) {
     return <NotFoundScreen />;
@@ -132,30 +132,11 @@ function PropertyScreen(): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
-                      </div>
-                      <span className="reviews__user-name">
-                        Max
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                    </div>
-                  </li>
+                  {reviews.map((review) => (
+                    <ReviewList review={review} key={review.id} />
+                  ))}
                 </ul>
                 <ReviewForm />
               </section>
