@@ -99,7 +99,7 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
               <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
               <SortOptions sortType={SortType} currentSort={currentSort} changeSetSort={changeSetSort}/>
               <div className="cities__places-list places__list tabs__content">
-                <OfferList offers={sortedOffers} onListItemHover={onListItemHover}/>
+                <OfferList offers={sortedOffers} onListItemHover={onListItemHover} classForCard='cities__place-card' classForImageWrapper='cities__image-wrapper'/>
               </div>
             </section>
             <div className="cities__right-section">

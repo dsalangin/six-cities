@@ -14,15 +14,15 @@ const offers: Offer[] = [
     description: 'A quiet cozy and picturesque that hides behind a a river by theunique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine','Dishwasher'],
     host: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: 'img/avatar-angelina.jpg',
       id: 3,
       isPro: true,
       name: 'Angelina',
     },
     id: 1,
-    images: ['img/1.png', 'img/2.png'],
+    images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-01.jpg'],
     isFavorite: false,
-    isPremium : false,
+    isPremium : true,
     location: {
       latitude: 52.3909553943508,
       longitude: 4.85309666406198,
@@ -57,7 +57,7 @@ const offers: Offer[] = [
     id: 2,
     images: ['img/1.png', 'img/2.png'],
     isFavorite: false,
-    isPremium : false,
+    isPremium : true,
     location: {
       latitude: 52.3609553943508,
       longitude: 4.85309666406198,
