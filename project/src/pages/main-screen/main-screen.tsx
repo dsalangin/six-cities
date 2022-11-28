@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setOffers } from '../../store/action';
 import SortOptions from '../../components/sort-options/sort-options';
 import Header from '../../components/header/header';
+import MainEmpty from '../../components/main-empty/main-empty';
 
 type MainScreenProps = {
   offers: Offer[];
@@ -22,6 +23,7 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
   const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
   const filteredOffers = useMemo(() => offerFromStore.filter((offer) => offer.city.name === currentCity), [offerFromStore, currentCity]);
+  const isMainNotEmpty = filteredOffers.length;
 
   const dispatch = useAppDispatch();
 
@@ -61,30 +63,32 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
 
       <Header />
 
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index ${!isMainNotEmpty ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
             <CitiesList cities={CITIES}/>
           </section>
         </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
-              <SortOptions sortType={SortType} currentSort={currentSort} changeSetSort={changeSetSort}/>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferList offers={sortedOffers} onListItemHover={onListItemHover} classForCard='cities__place-card' classForImageWrapper='cities__image-wrapper'/>
-              </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map city={filteredCity} offers={filteredOffers} selectedOffer={selectedOffer}/>
+        {isMainNotEmpty ?
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
+                <SortOptions sortType={SortType} currentSort={currentSort} changeSetSort={changeSetSort}/>
+                <div className="cities__places-list places__list tabs__content">
+                  <OfferList offers={sortedOffers} onListItemHover={onListItemHover} classForCard='cities__place-card' classForImageWrapper='cities__image-wrapper'/>
+                </div>
               </section>
+              <div className="cities__right-section">
+                <section className="cities__map map">
+                  <Map city={filteredCity} offers={filteredOffers} selectedOffer={selectedOffer}/>
+                </section>
+              </div>
             </div>
-          </div>
-        </div>
+          </div> :
+          <MainEmpty />}
       </main>
     </div>
   );
