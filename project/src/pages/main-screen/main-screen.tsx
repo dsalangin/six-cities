@@ -4,17 +4,12 @@ import {Offer} from '../../types/offer';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import {CITIES, SortType} from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setOffers } from '../../store/action';
+import {useAppSelector} from '../../hooks';
 import SortOptions from '../../components/sort-options/sort-options';
 import Header from '../../components/header/header';
 import MainEmpty from '../../components/main-empty/main-empty';
 
-type MainScreenProps = {
-  offers: Offer[];
-}
-
-function MainScreen ({offers}: MainScreenProps): JSX.Element {
+function MainScreen (): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
   const [currentSort, setCurrentSort] = useState<string>('Popular');
   const [sortedOffers, setSortedOffers] = useState<Offer[]>([]);
@@ -24,12 +19,6 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
   const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
   const filteredOffers = useMemo(() => offerFromStore.filter((offer) => offer.city.name === currentCity), [offerFromStore, currentCity]);
   const isMainNotEmpty = filteredOffers.length;
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setOffers(offers));
-  }, []);
 
   const changeSetSort = (type: string) => {
     setCurrentSort(type);
@@ -54,7 +43,7 @@ function MainScreen ({offers}: MainScreenProps): JSX.Element {
   }, [currentSort, filteredOffers]);
 
   const onListItemHover = (listItemId: number) => {
-    const currentPoint = offers.find((offer) => offer.id === listItemId);
+    const currentPoint = filteredOffers.find((offer) => offer.id === listItemId);
     setSelectedOffer(currentPoint);
   };
 

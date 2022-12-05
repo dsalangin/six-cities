@@ -1,17 +1,17 @@
 import {useState, MouseEvent, ChangeEvent} from 'react';
 
 function ReviewForm() {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+  const [, setRating] = useState(0);
+  const [, setComment] = useState('');
 
   const inputClickHandler = (evt: MouseEvent<HTMLInputElement>) => {
     const target = evt.target as unknown as HTMLInputElement;
     setRating(Number(target.value));
-  }
+  };
 
   const fieldChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(evt.target.value);
-  }
+  };
 
   return (
     <form className="reviews__form form" action="#" method="post">

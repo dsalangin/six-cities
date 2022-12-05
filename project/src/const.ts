@@ -5,9 +5,19 @@ enum AppRoute {
   Property = '/offer',
 }
 
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+  NearOffers = '/hotels/{hotelId}/nearby',
+  Reviews = '/comments/{hotelId}',
+  Property = '/hotels/{hotelId}',
+}
+
 enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
 }
 
 const CITIES = [
