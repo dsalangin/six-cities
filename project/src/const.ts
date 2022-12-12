@@ -12,7 +12,8 @@ export enum APIRoute {
   NearOffers = '/hotels/{hotelId}/nearby',
   Reviews = '/comments/{hotelId}',
   Property = '/hotels/{hotelId}',
-  Favorite = '/favorite',
+  FavoriteOffers = '/favorite',
+  FavoriteOffer = '/favorite/{hotel_id}/{status}',
 }
 
 enum AuthorizationStatus {
