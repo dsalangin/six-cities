@@ -1,21 +1,37 @@
 import ReviewForm from '../../components/review-form/review-form';
-import {useAppSelector} from '../../hooks';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import {CITIES} from '../../const';
 import {useParams} from 'react-router-dom';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {reviews} from '../../mocks/review';
 import ReviewList from '../../components/review-list/review-list';
 import Header from '../../components/header/header';
+import { useEffect } from 'react';
+import { fetchCommentsAction, fetchSelectedOfferAction } from '../../store/api-actions';
 
 function PropertyScreen(): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
   const offersFromStore = useAppSelector((state) => state.offers);
+
+  const offer = useAppSelector((state) => state.selectedOffer);
+  const reviews = useAppSelector((state) => state.reviews);
+
   const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
   const filteredNearOffers = offersFromStore.filter((offer) => offer.city.name === currentCity);
-  const params = useParams();
-  const [currentOffer] = filteredNearOffers.filter((offer) => String(offer.id) === params.id);
+  const {id} = useParams();
+  // const [currentOffer] = filteredNearOffers.filter((offer) => String(offer.id) === id);
+  const currentOffer = offer;
+
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if(id) {
+      dispatch(fetchSelectedOfferAction({hotelID: id}));
+      dispatch(fetchCommentsAction({hotelID: id}));
+    }
+  },[id]);
+
 
   if(!currentOffer) {
     return <NotFoundScreen />;
