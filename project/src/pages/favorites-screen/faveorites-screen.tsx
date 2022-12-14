@@ -1,12 +1,20 @@
+import { useEffect } from 'react';
 import FavoriteOfferCard from '../../components/favourite-offer-card/favourite-offer-card';
 import Header from '../../components/header/header';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFavoriteOffers } from '../../store/offers-data/selectors';
+import { fetchFavoriteOffersAction } from '../../store/api-actions';
 
 
 function FavoritesScreen(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const isFavoritesFilter = offers.filter((offer) => offer.isFavorite === true);
-  const isFavoriteElements = isFavoritesFilter.map((offer) => <FavoriteOfferCard offer={offer} key={offer.id}/>);
+  const offers = useAppSelector(getFavoriteOffers);
+  // const isFavoritesFilter = offers.filter((offer) => offer.isFavorite === true);
+  const isFavoriteElements = offers.map((offer) => <FavoriteOfferCard offer={offer} key={offer.id}/>);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersAction());
+  },[]);
 
   return (
     <div className="page">
