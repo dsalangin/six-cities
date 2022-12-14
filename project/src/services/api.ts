@@ -39,7 +39,7 @@ const createApi = (): AxiosInstance => {
           toast.info(error.response.data.error);
         }
 
-        toast.warn(error.response.data.error);
+        toast.error(error.response.data.error);
       }
 
       throw error;

@@ -1,15 +1,14 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AuthorizationStatus } from '../const';
+import { dropToken, saveToken } from '../services/token';
+import { AppDispatch, State } from '../types/store';
 import { Offer } from '../types/offer';
 import { Review } from '../types/review';
-import { AppDispatch, State } from '../types/store';
 import { FavoriteOfferData } from '../types/favorite-offer-data';
-import { setOffers, setOffersDataLoadingStatus, setNearOffersDataLoadingStatus} from './action';
 import { ReviewData } from '../types/review-data';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
-import { dropToken, saveToken } from '../services/token';
 
 //получаю список отелей
 const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
@@ -25,7 +24,7 @@ const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
 );
 
 //получаю выбранный отель
-const fetchSelectedOfferAction = createAsyncThunk<Offer, {hotelID: string}, {
+const fetchCurrentOfferAction = createAsyncThunk<Offer, {hotelID: string}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -54,7 +53,7 @@ const fetchNearOffersAction = createAsyncThunk<Offer[], {hotelID: string}, {
 //Коды ответов:
 //— 200 ОК
 //— 401 Unauthorized (в случае, если не пройдена авторизация)
-const fetchFavoriteOffers = createAsyncThunk<Offer[], undefined, {
+const fetchFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -71,7 +70,7 @@ const fetchFavoriteOffers = createAsyncThunk<Offer[], undefined, {
 // с актуальным состоянием поля is_favorite
 // Параметры:
 // — :hotel_id — ID отеля, который нужно убрать/добавить в избранное
-// — :status — значения могут быть 1 или 0. 1 добавляет отель в избранное, 0 удаляе
+// — :status — значения могут быть 1 или 0. 1 добавляет отель в избранное, 0 удаляеt
 // Request:
 // — URL: POST /favorite/42/1
 // Response:
@@ -130,7 +129,6 @@ const checkAuthAction = createAsyncThunk<AuthorizationStatus, undefined, {
   }
 );
 
-
 const loginAction = createAsyncThunk<void, AuthData, {
   dispatch: AppDispatch;
   state: State;
@@ -155,4 +153,7 @@ const logoutAction = createAsyncThunk<void, undefined, {
   }
 );
 
-export {fetchOffersAction, fetchNearOffersAction, fetchSelectedOfferAction, fetchReviewsAction, fetchFavoriteOffers, checkAuthAction};
+export {fetchOffersAction, fetchNearOffersAction, fetchCurrentOfferAction,
+  fetchReviewsAction, fetchFavoriteOffersAction, checkAuthAction, changeFavoriteOfferAction,
+  addReviewAction, loginAction, logoutAction
+};

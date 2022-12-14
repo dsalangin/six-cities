@@ -8,14 +8,14 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from '../../components/review-list/review-list';
 import Header from '../../components/header/header';
 import { useEffect } from 'react';
-import { fetchCommentsAction, fetchSelectedOfferAction } from '../../store/api-actions';
+// import { fetchCommentsAction, fetchSelectedOfferAction } from '../../store/api-actions';
 
 function PropertyScreen(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.city);
-  const offersFromStore = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector((state) => state.ACTION.city);
+  const offersFromStore = useAppSelector((state) => state.DATA.offers);
 
-  const offer = useAppSelector((state) => state.selectedOffer);
-  const reviews = useAppSelector((state) => state.reviews);
+  const offer = useAppSelector((state) => state.DATA.currentOffer);
+  const reviews = useAppSelector((state) => state.DATA.reviews);
 
   const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
   const filteredNearOffers = offersFromStore.filter((offer) => offer.city.name === currentCity);
@@ -24,13 +24,13 @@ function PropertyScreen(): JSX.Element {
   const currentOffer = offer;
 
 
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    if(id) {
-      dispatch(fetchSelectedOfferAction({hotelID: id}));
-      dispatch(fetchCommentsAction({hotelID: id}));
-    }
-  },[id]);
+  // const dispatch = useAppDispatch();
+  // useEffect(() => {
+  //   if(id) {
+  //     dispatch(fetchSelectedOfferAction({hotelID: id}));
+  //     dispatch(fetchCommentsAction({hotelID: id}));
+  //   }
+  // },[id]);
 
 
   if(!currentOffer) {

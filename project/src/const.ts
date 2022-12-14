@@ -5,7 +5,7 @@ enum AppRoute {
   Property = '/offer',
 }
 
-export enum APIRoute {
+enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
@@ -62,4 +62,10 @@ const SortType = {
   RAITING: 'Top rated first',
 };
 
-export {AppRoute, AuthorizationStatus, CITIES, SortType};
+enum NameSpace {
+  Data = 'DATA',
+  Action = 'ACTION',
+  User = 'USER',
+}
+
+export {AppRoute, APIRoute, AuthorizationStatus, CITIES, SortType, NameSpace};

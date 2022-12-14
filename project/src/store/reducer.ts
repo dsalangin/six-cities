@@ -2,7 +2,7 @@ import {createReducer} from '@reduxjs/toolkit';
 import {Offer} from '../types/offer';
 import {changeCity, setOffers, setNearOffers, setOffersDataLoadingStatus, setNearOffersDataLoadingStatus} from './action';
 import {AuthorizationStatus} from '../const';
-import { fetchOffersAction, fetchReviewsAction, fetchSelectedOfferAction, checkAuthAction } from './api-actions';
+import { fetchOffersAction, fetchReviewsAction, checkAuthAction } from './api-actions';
 import { Review } from '../types/review';
 
 type initialStateType = {
@@ -45,16 +45,6 @@ const reducer = createReducer(initialState, (builder) => {
       console.log(action);
     })
 
-    .addCase(fetchSelectedOfferAction.pending , (_state, action) => {
-      console.log(action)
-    })
-    .addCase(fetchSelectedOfferAction.fulfilled , (state, action) => {
-      console.log(action);
-      state.selectedOffer = action.payload;
-    })
-    .addCase(fetchSelectedOfferAction.rejected , (_state, action) => {
-      console.log(action);
-    })
 
     .addCase(fetchReviewsAction.pending , (_state, action) => {
       console.log(action)
@@ -98,4 +88,4 @@ const reducer = createReducer(initialState, (builder) => {
     });
 });
 
-export {reducer};
+// export {reducer};

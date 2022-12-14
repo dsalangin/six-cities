@@ -8,14 +8,16 @@ import {useAppSelector} from '../../hooks';
 import SortOptions from '../../components/sort-options/sort-options';
 import Header from '../../components/header/header';
 import MainEmpty from '../../components/main-empty/main-empty';
+import { getCity } from '../../store/user-action/selectors';
+import { getOffers } from '../../store/offers-data/selectors';
 
 function MainScreen (): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
   const [currentSort, setCurrentSort] = useState<string>('Popular');
   const [sortedOffers, setSortedOffers] = useState<Offer[]>([]);
 
-  const offerFromStore = useAppSelector((state) => state.offers);
-  const currentCity = useAppSelector((state) => state.city);
+  const offerFromStore = useAppSelector(getOffers);
+  const currentCity = useAppSelector(getCity);
   const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
   const filteredOffers = useMemo(() => offerFromStore.filter((offer) => offer.city.name === currentCity), [offerFromStore, currentCity]);
   const isMainNotEmpty = filteredOffers.length;
