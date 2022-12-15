@@ -62,7 +62,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(checkAuthAction.fulfilled , (state, action) => {
       console.log(action);
-      state.authorizationStatus = action.payload;
+      // state.authorizationStatus = action.payload;
     })
     .addCase(checkAuthAction.rejected , (_state, action) => {
       console.log(action);

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { APIRoute, AuthorizationStatus } from '../const';
+import { APIRoute } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import {changeFavoriteStatus} from './offers-data/offers-data';
 import { AppDispatch, State } from '../types/store';
@@ -119,27 +119,28 @@ const addReviewAction = createAsyncThunk<Review, ReviewData, {
 
 
 //проверка авторизации
-const checkAuthAction = createAsyncThunk<AuthorizationStatus, undefined, {
+const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
   async (_arg, {extra: api}) => {
-    const {data} = await api.get<AuthorizationStatus>(APIRoute.Login);
+    const {data} = await api.get<UserData>(APIRoute.Login);
     return data;
   }
 );
 
-const loginAction = createAsyncThunk<void, AuthData, {
+const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/login',
   async ({email, password}, {extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+    saveToken(data.token);
+    return data;
   }
 );
 

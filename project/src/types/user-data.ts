@@ -1,8 +1,8 @@
 type UserData = {
-  avatar_url: string;
+  avatarUrl: string;
   email: string;
   id: string;
-  is_pro: boolean;
+  isPro: boolean;
   name: string;
   token: string;
 }

@@ -1,5 +1,7 @@
 import type {Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
+// import { useAppDispatch } from '../../hooks';
+// import { changeFavoriteOfferAction } from '../../store/api-actions';
 
 type OfferCardProps = {
   offer: Offer;
@@ -9,6 +11,11 @@ type OfferCardProps = {
 }
 
 function OfferCard ({offer, changeSetActive, classForCard, classForImageWrapper}: OfferCardProps): JSX.Element {
+  // const dispatch = useAppDispatch();
+  // function buttonActiveHandler() {
+  //   dispatch(changeFavoriteOfferAction({hotelId: offer.id, isFavorite: !offer.isFavorite}));
+  // }
+
   function offerMouseEnterHandler() {
     changeSetActive(offer.id);
   }
