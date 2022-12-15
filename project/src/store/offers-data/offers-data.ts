@@ -37,8 +37,19 @@ const OffersData = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
-    changeFavoriteStatus: () => {
-      //method
+    changeFavoriteStatus: (state, action) => {
+      const currentOfferFromStore = state.currentOffer;
+      const changedOffer = state.offers.find((offer) => offer.id === action.payload.hotelId);
+
+      if(currentOfferFromStore) {
+        if(currentOfferFromStore.id === changedOffer?.id) {
+          currentOfferFromStore.isFavorite = action.payload.isFavorite;
+        }
+      }
+
+      if(changedOffer) {
+        changedOffer.isFavorite = action.payload.isFavorite;
+      }
     }
   },
   extraReducers(builder) {
@@ -87,12 +98,22 @@ const OffersData = createSlice({
         state.reviews = action.payload;
       })
 
-      // Написать логику
       .addCase(changeFavoriteOfferAction.fulfilled , (state, action) => {
-        //method
+        const currentOfferIndex = state.favoriteOffers.findIndex((offer) => offer.id === action.payload.id);
+        if(currentOfferIndex > -1) {
+          state.favoriteOffers[currentOfferIndex] = action.payload;
+          state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.isFavorite);
+        } else {
+          state.favoriteOffers.push(action.payload);
+        }
+        const nearOfferIndex = state.nearOffers.findIndex((offer) => offer.id === action.payload.id);
+        if(nearOfferIndex > -1) {
+          state.nearOffers[nearOfferIndex] = action.payload;
+        }
       });
   },
 
 });
 
 export {OffersData};
+export const {changeFavoriteStatus} = OffersData.actions;

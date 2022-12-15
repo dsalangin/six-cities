@@ -2,6 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { dropToken, saveToken } from '../services/token';
+import {changeFavoriteStatus} from './offers-data/offers-data';
 import { AppDispatch, State } from '../types/store';
 import { Offer } from '../types/offer';
 import { Review } from '../types/review';
@@ -82,8 +83,9 @@ const changeFavoriteOfferAction = createAsyncThunk<Offer, FavoriteOfferData, {
   extra: AxiosInstance;
 }>(
   'user/changeFavoriteOffer',
-  async ({hotelId, isFavorite}, {extra: api}) => {
+  async ({hotelId, isFavorite}, {dispatch ,extra: api}) => {
     const {data} = await api.post<Offer>(APIRoute.FavoriteOffer.replace('{hotel_id}', String(hotelId)).replace('{status}', String(Number(isFavorite))));
+    dispatch(changeFavoriteStatus({hotelId, isFavorite}));
     return data;
   }
 );
