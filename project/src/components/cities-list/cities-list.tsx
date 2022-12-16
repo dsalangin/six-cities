@@ -15,9 +15,9 @@ function CitiesList ({cities}: CitiesListProps): JSX.Element {
     <ul className="locations__list tabs__list">
       {cities.map((city) =>
         (
-          <li className="locations__item" key={city.title}>
-            <Link className={`locations__item-link tabs__item ${city.title === currentCity ? 'tabs__item--active' : ''}`} to={`#${city.title}`} onClick={() => dispatch(changeCity(city.title))}>
-              <span>{city.title}</span>
+          <li className="locations__item" key={city.name}>
+            <Link className={`locations__item-link tabs__item ${city.name === currentCity ? 'tabs__item--active' : ''}`} to={`#${city.name}`} onClick={() => dispatch(changeCity(city.name))}>
+              <span>{city.name}</span>
             </Link>
           </li>)
       )}

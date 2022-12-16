@@ -31,7 +31,8 @@ function Map ({city, offers, currentOffer}: MapProps) {
 
   useEffect(() =>{
     if(map) {
-      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+      const {latitude, longitude, zoom} = city.location;
+      map.setView([latitude, longitude], zoom);
 
       offers.forEach((offer) => {
         leaflet.marker([offer.location.latitude, offer.location.longitude],

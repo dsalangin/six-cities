@@ -19,7 +19,7 @@ function MainScreen (): JSX.Element {
 
   const offerFromStore = useAppSelector(getOffers);
   const currentCity = useAppSelector(getCity);
-  const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
+  const [filteredCity] = CITIES.filter((city) => city.name === currentCity);
   const filteredOffers = useMemo(() => offerFromStore.filter((offer) => offer.city.name === currentCity), [offerFromStore, currentCity]);
   const isMainNotEmpty = filteredOffers.length;
 
@@ -80,7 +80,7 @@ function MainScreen (): JSX.Element {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map city={filteredCity} offers={filteredOffers} selectedOffer={selectedOffer}/>
+                  <Map city={filteredCity} offers={filteredOffers} currentOffer={selectedOffer}/>
                 </section>
               </div>
             </div>
