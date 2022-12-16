@@ -8,10 +8,10 @@ import {Offer} from '../../types/offer';
 type MapProps = {
   city: City;
   offers: Offer[];
-  selectedOffer?: Offer;
+  currentOffer?: Offer;
 }
 
-function Map ({city, offers, selectedOffer}: MapProps) {
+function Map ({city, offers, currentOffer}: MapProps) {
 
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
@@ -31,15 +31,15 @@ function Map ({city, offers, selectedOffer}: MapProps) {
 
   useEffect(() =>{
     if(map) {
-      map.setView([city.lat, city.lng], city.zoom);
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
 
       offers.forEach((offer) => {
         leaflet.marker([offer.location.latitude, offer.location.longitude],
-          {icon:(offer.id === selectedOffer?.id) ? currentCustomIcon : defaultCustomIcon}
+          {icon:(offer.id === currentOffer?.id) ? currentCustomIcon : defaultCustomIcon}
         ).addTo(map);
       });
     }
-  },[map, offers, selectedOffer]);
+  },[map, offers, currentOffer]);
 
   return (
     <div

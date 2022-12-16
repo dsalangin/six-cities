@@ -1,6 +1,6 @@
 type ReviewData = {
     comment: string;
-    hotelID: string;
+    hotelId: string;
     rating: number;
 }
 

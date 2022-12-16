@@ -25,27 +25,27 @@ const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
 );
 
 //получаю выбранный отель
-const fetchCurrentOfferAction = createAsyncThunk<Offer, {hotelID: string}, {
+const fetchCurrentOfferAction = createAsyncThunk<Offer, {hotelId: string}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchSelectedOffer',
-  async ({hotelID}, {extra: api}) => {
-    const {data} = await api.get<Offer>(APIRoute.Property.replace('{hotelId}', hotelID));
+  async ({hotelId}, {extra: api}) => {
+    const {data} = await api.get<Offer>(APIRoute.Property.replace('{hotelId}', hotelId));
     return data;
   }
 );
 
 //получаю список отелей поблизости
-const fetchNearOffersAction = createAsyncThunk<Offer[], {hotelID: string}, {
+const fetchNearOffersAction = createAsyncThunk<Offer[], {hotelId: string}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchNearOffers',
-  async ({hotelID}, {extra: api}) => {
-    const {data} = await api.get<Offer[]>(APIRoute.NearOffers.replace('{hotelID}', hotelID));
+  async ({hotelId}, {extra: api}) => {
+    const {data} = await api.get<Offer[]>(APIRoute.NearOffers.replace('{hotelId}', hotelId));
     return data;
   }
 );
@@ -92,14 +92,14 @@ const changeFavoriteOfferAction = createAsyncThunk<Offer, FavoriteOfferData, {
 
 
 //получаю список коментариев
-const fetchReviewsAction = createAsyncThunk<Review[], {hotelID: string}, {
+const fetchReviewsAction = createAsyncThunk<Review[], {hotelId: string}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchReviews',
-  async ({hotelID}, {extra: api}) => {
-    const {data} = await api.get<Review[]>(APIRoute.Reviews.replace('{hotelId}', hotelID));
+  async ({hotelId}, {extra: api}) => {
+    const {data} = await api.get<Review[]>(APIRoute.Reviews.replace('{hotelId}', hotelId));
     return data;
   }
 );
@@ -111,8 +111,8 @@ const addReviewAction = createAsyncThunk<Review, ReviewData, {
   extra: AxiosInstance;
 }>(
   'user/addReview',
-  async ({rating, comment, hotelID}, {extra: api}) => {
-    const {data} = await api.post<Review>(APIRoute.Reviews.replace('{hotel_id}', hotelID), {rating, comment});
+  async ({rating, comment, hotelId}, {extra: api}) => {
+    const {data} = await api.post<Review>(APIRoute.Reviews.replace('{hotel_id}', hotelId), {rating, comment});
     return data;
   }
 );

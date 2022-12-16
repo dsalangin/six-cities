@@ -19,7 +19,7 @@ function useMap ({mapRef, city}: UseMapProps) {
 
   useEffect(() => {
     if(mapRef.current && !isRenderRef.current) {
-      const instance = leaflet.map(mapRef.current).setView([city.lat, city.lng], city.zoom);
+      const instance = leaflet.map(mapRef.current).setView([city.location.latitude, city.location.longitude], city.location.zoom);
 
       leaflet.tileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',

@@ -1,6 +1,5 @@
 import ReviewForm from '../../components/review-form/review-form';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {CITIES} from '../../const';
 import {useParams} from 'react-router-dom';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
@@ -8,30 +7,24 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from '../../components/review-list/review-list';
 import Header from '../../components/header/header';
 import { useEffect } from 'react';
-// import { fetchCommentsAction, fetchSelectedOfferAction } from '../../store/api-actions';
+import { fetchCurrentOfferAction, fetchNearOffersAction, fetchReviewsAction } from '../../store/api-actions';
+import { getCurrentOffer, getNearOffers, getReviews } from '../../store/offers-data/selectors';
 
 function PropertyScreen(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.ACTION.city);
-  const offersFromStore = useAppSelector((state) => state.DATA.offers);
-
-  const offer = useAppSelector((state) => state.DATA.currentOffer);
-  const reviews = useAppSelector((state) => state.DATA.reviews);
-
-  const [filteredCity] = CITIES.filter((city) => city.title === currentCity);
-  const filteredNearOffers = offersFromStore.filter((offer) => offer.city.name === currentCity);
   const {id} = useParams();
-  // const [currentOffer] = filteredNearOffers.filter((offer) => String(offer.id) === id);
-  const currentOffer = offer;
+  const dispatch = useAppDispatch();
 
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const reviews = useAppSelector(getReviews);
+  const NearOffers = useAppSelector(getNearOffers);
 
-  // const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   if(id) {
-  //     dispatch(fetchSelectedOfferAction({hotelID: id}));
-  //     dispatch(fetchCommentsAction({hotelID: id}));
-  //   }
-  // },[id]);
-
+  useEffect(() => {
+    if(id) {
+      dispatch(fetchCurrentOfferAction({hotelId: id}));
+      dispatch(fetchReviewsAction({hotelId: id}));
+      dispatch(fetchNearOffersAction({hotelId: id}));
+    }
+  },[id]);
 
   if(!currentOffer) {
     return <NotFoundScreen />;
@@ -136,14 +129,14 @@ function PropertyScreen(): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={filteredCity} offers={filteredNearOffers} selectedOffer={currentOffer}/>
+            <Map city={currentOffer.city} offers={[...NearOffers, currentOffer]} currentOffer={currentOffer}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferList offers={filteredNearOffers} classForCard='near-places__card' classForImageWrapper='near-places__image-wrapper'/>
+              <OfferList offers={NearOffers} classForCard='near-places__card' classForImageWrapper='near-places__image-wrapper'/>
             </div>
           </section>
         </div>
