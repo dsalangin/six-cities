@@ -38,8 +38,6 @@ const createApi = (): AxiosInstance => {
         if(error.response.status === StatusCodes.UNAUTHORIZED) {
           toast.info(error.response.data.error);
         }
-
-        toast.error(error.response.data.error);
       }
 
       throw error;

@@ -1,9 +1,10 @@
-import { useAppSelector } from "../../hooks";
-import { getCity } from "../../store/user-action/selectors";
+import { useAppSelector } from '../../hooks';
+import { getCity } from '../../store/user-action/selectors';
 
-const city = useAppSelector(getCity);
 
 function MainEmpty () {
+  const city = useAppSelector(getCity);
+
   return (
     <div className="cities">
       <div className="cities__places-container cities__places-container--empty container">

@@ -9,7 +9,8 @@ import SortOptions from '../../components/sort-options/sort-options';
 import Header from '../../components/header/header';
 import MainEmpty from '../../components/main-empty/main-empty';
 import { getCity } from '../../store/user-action/selectors';
-import { getOffers } from '../../store/offers-data/selectors';
+import { getErrorMessage, getOffers } from '../../store/offers-data/selectors';
+import ErrorScreen from '../error-screen/error-screen';
 
 function MainScreen (): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
@@ -48,6 +49,11 @@ function MainScreen (): JSX.Element {
     const currentPoint = filteredOffers.find((offer) => offer.id === listItemId);
     setSelectedOffer(currentPoint);
   };
+
+  const error = useAppSelector(getErrorMessage);
+  if(error) {
+    return <ErrorScreen error={error} />;
+  }
 
   return (
     <div className="page page--gray page--main">
