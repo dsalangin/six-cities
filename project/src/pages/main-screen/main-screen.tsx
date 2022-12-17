@@ -17,10 +17,10 @@ function MainScreen (): JSX.Element {
   const [currentSort, setCurrentSort] = useState<string>('Popular');
   const [sortedOffers, setSortedOffers] = useState<Offer[]>([]);
 
-  const offerFromStore = useAppSelector(getOffers);
+  const offersFromStore = useAppSelector(getOffers);
   const currentCity = useAppSelector(getCity);
   const [filteredCity] = CITIES.filter((city) => city.name === currentCity);
-  const filteredOffers = useMemo(() => offerFromStore.filter((offer) => offer.city.name === currentCity), [offerFromStore, currentCity]);
+  const filteredOffers = useMemo(() => offersFromStore.filter((offer) => offer.city.name === currentCity), [offersFromStore, currentCity]);
   const isMainNotEmpty = filteredOffers.length;
 
   const changeSetSort = (type: string) => {
