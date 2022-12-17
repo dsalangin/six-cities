@@ -12,7 +12,7 @@ function UserNav () {
   const dispatch = useAppDispatch();
   const signOutHandler = (evt: React.MouseEvent) => {
     evt.preventDefault();
-    dispatch(logoutAction);
+    dispatch(logoutAction());
   };
 
   return (
@@ -23,7 +23,7 @@ function UserNav () {
             <li className="header__nav-item user">
               <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                 <div className="header__avatar-wrapper user__avatar-wrapper">
-                  <img src={userData.avatarUrl || 'img/avatar.svg'} alt="" width="20" height="20" />
+                  <img src={userData.avatarUrl || 'img/avatar.svg'} alt="user-photo"/>
                 </div>
                 <span className="header__user-name user__name">{userData.email}</span>
               </Link>
