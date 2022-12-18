@@ -4,13 +4,15 @@ import {Offer} from '../../types/offer';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import {CITIES, SortType} from '../../const';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import SortOptions from '../../components/sort-options/sort-options';
 import Header from '../../components/header/header';
 import MainEmpty from '../../components/main-empty/main-empty';
 import { getCity } from '../../store/user-action/selectors';
 import { getErrorMessage, getOffers } from '../../store/offers-data/selectors';
 import ErrorScreen from '../error-screen/error-screen';
+import { useLocation } from 'react-router-dom';
+import { changeCity } from '../../store/user-action/user-action';
 
 function MainScreen (): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
@@ -22,6 +24,17 @@ function MainScreen (): JSX.Element {
   const [filteredCity] = CITIES.filter((city) => city.name === currentCity);
   const filteredOffers = useMemo(() => offersFromStore.filter((offer) => offer.city.name === currentCity), [offersFromStore, currentCity]);
   const isMainNotEmpty = filteredOffers.length;
+
+  const dispatch = useAppDispatch();
+
+  const {hash} = useLocation();
+  if(hash) {
+    const cityFromLocation = hash.slice(1);
+    const shouldChangeCity = CITIES.find((city) => city.name === cityFromLocation);
+    if(shouldChangeCity) {
+      dispatch(changeCity(cityFromLocation));
+    }
+  }
 
   const changeSetSort = (type: string) => {
     setCurrentSort(type);
