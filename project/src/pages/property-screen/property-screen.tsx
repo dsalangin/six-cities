@@ -136,7 +136,7 @@ function PropertyScreen(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferList offers={NearOffers} classForCard='near-places__card' classForImageWrapper='near-places__image-wrapper'/>
+              <OfferList offers={NearOffers} classForCard='near-places__card' classForImageWrapper='near-places__image-wrapper' classForCardInfo='place-card__info'/>
             </div>
           </section>
         </div>

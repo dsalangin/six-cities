@@ -5,23 +5,28 @@ import {Link} from 'react-router-dom';
 
 type OfferCardProps = {
   offer: Offer;
-  changeSetActive: (id: number)=>void;
+  changeSetActive?: (id: number)=>void;
   classForCard: string;
   classForImageWrapper: string;
+  classForCardInfo: string;
 }
 
-function OfferCard ({offer, changeSetActive, classForCard, classForImageWrapper}: OfferCardProps): JSX.Element {
+function OfferCard ({offer, changeSetActive, classForCard, classForImageWrapper, classForCardInfo}: OfferCardProps): JSX.Element {
   // const dispatch = useAppDispatch();
   // function buttonActiveHandler() {
   //   dispatch(changeFavoriteOfferAction({hotelId: offer.id, isFavorite: !offer.isFavorite}));
   // }
 
   function offerMouseEnterHandler() {
-    changeSetActive(offer.id);
+    if(changeSetActive) {
+      changeSetActive(offer.id);
+    }
   }
 
   function offerMouseLeaveHandler() {
-    changeSetActive(0);
+    if(changeSetActive) {
+      changeSetActive(0);
+    }
   }
 
   return (
@@ -38,7 +43,7 @@ function OfferCard ({offer, changeSetActive, classForCard, classForImageWrapper}
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={classForCardInfo}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>

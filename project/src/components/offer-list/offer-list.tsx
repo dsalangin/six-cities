@@ -6,9 +6,10 @@ type OfferListProps = {
   onListItemHover?: (id: number) => void;
   classForCard: string;
   classForImageWrapper: string;
+  classForCardInfo: string;
 }
 
-function OfferList({offers, onListItemHover, classForCard, classForImageWrapper}: OfferListProps): JSX.Element {
+function OfferList({offers, onListItemHover, classForCard, classForImageWrapper, classForCardInfo}: OfferListProps): JSX.Element {
 
   function changeSetActive(id: number) {
     onListItemHover?.(id);
@@ -16,9 +17,16 @@ function OfferList({offers, onListItemHover, classForCard, classForImageWrapper}
 
   return (
     <>
-      {offers.map((offer) =>
-        <OfferCard offer={offer} key={offer.id} changeSetActive={changeSetActive} classForCard={classForCard} classForImageWrapper={classForImageWrapper}/>
-      )}
+      {offers.map((offer) => (
+        <OfferCard
+          offer={offer}
+          key={offer.id}
+          changeSetActive={changeSetActive}
+          classForCard={classForCard}
+          classForImageWrapper={classForImageWrapper}
+          classForCardInfo={classForCardInfo}
+        />
+      ))}
     </>
   );
 }
