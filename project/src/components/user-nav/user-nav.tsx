@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthStatus, getUserData } from '../../store/user-process/selectors';
@@ -8,11 +8,13 @@ import {logoutAction} from '../../store/api-actions';
 function UserNav () {
   const userData = useAppSelector(getUserData);
   const isAuth = useAppSelector(getAuthStatus);
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
   const signOutHandler = (evt: React.MouseEvent) => {
     evt.preventDefault();
     dispatch(logoutAction());
+    navigate(AppRoute.Main);
   };
 
   return (
