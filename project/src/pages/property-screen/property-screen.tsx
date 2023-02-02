@@ -48,7 +48,7 @@ function PropertyScreen(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {currentOffer.images.map((img) => (
+              {currentOffer.images.slice(0,6).map((img) => (
                 <div className="property__image-wrapper" key={`${Math.random()}${img}`}>
                   <img className="property__image" src={img} alt={currentOffer.type}/>
                 </div>
