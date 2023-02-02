@@ -1,18 +1,23 @@
 import ReviewForm from '../../components/review-form/review-form';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from '../../components/review-list/review-list';
 import Header from '../../components/header/header';
 import { useEffect } from 'react';
-import { fetchCurrentOfferAction, fetchNearOffersAction, fetchReviewsAction } from '../../store/api-actions';
+import { fetchCurrentOfferAction, fetchNearOffersAction, fetchReviewsAction, changeFavoriteOfferAction } from '../../store/api-actions';
 import { getCurrentOffer, getNearOffers, getReviews } from '../../store/offers-data/selectors';
+import { getAuthStatus } from '../../store/user-process/selectors';
+import { AppRoute, AuthorizationStatus } from '../../const';
 
 function PropertyScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const isAuth = useAppSelector(getAuthStatus);
 
   const currentOffer = useAppSelector(getCurrentOffer);
   const reviews = useAppSelector(getReviews);
@@ -26,26 +31,28 @@ function PropertyScreen(): JSX.Element {
     }
   },[id]);
 
+  const onClickFavoritesButton = () => {
+    if(id) {
+      dispatch(changeFavoriteOfferAction({hotelId: +id, isFavorite: !currentOffer?.isFavorite}));
+    }
+  };
+
   if(!currentOffer) {
     return <NotFoundScreen />;
   }
 
   return (
     <div className="page">
-
       <Header />
-
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-
               {currentOffer.images.map((img) => (
                 <div className="property__image-wrapper" key={`${Math.random()}${img}`}>
                   <img className="property__image" src={img} alt={currentOffer.type}/>
                 </div>
               ))}
-
             </div>
           </div>
           <div className="property__container container">
@@ -58,7 +65,7 @@ function PropertyScreen(): JSX.Element {
                 <h1 className="property__name">
                   {currentOffer.title}
                 </h1>
-                <button className={`property__bookmark-button button ${currentOffer.isFavorite ? 'property__bookmark-button--active' : ''}`} type="button">
+                <button className={`property__bookmark-button button ${currentOffer.isFavorite ? 'property__bookmark-button--active' : ''}`} type="button" onClick={() => isAuth === AuthorizationStatus.Auth ? onClickFavoritesButton() : navigate(AppRoute.Login)}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -104,7 +111,7 @@ function PropertyScreen(): JSX.Element {
                     <img className="property__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
-                    Angelina {currentOffer.host.name}
+                    {currentOffer.host.name}
                   </span>
                   {currentOffer.host.isPro &&
                     <span className="property__user-status">

@@ -1,7 +1,9 @@
 import type {Offer} from '../../types/offer';
-import {Link} from 'react-router-dom';
-// import { useAppDispatch } from '../../hooks';
-// import { changeFavoriteOfferAction } from '../../store/api-actions';
+import {Link, useNavigate} from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeFavoriteOfferAction } from '../../store/api-actions';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { getAuthStatus } from '../../store/user-process/selectors';
 
 type OfferCardProps = {
   offer: Offer;
@@ -12,10 +14,18 @@ type OfferCardProps = {
 }
 
 function OfferCard ({offer, changeSetActive, classForCard, classForImageWrapper, classForCardInfo}: OfferCardProps): JSX.Element {
-  // const dispatch = useAppDispatch();
-  // function buttonActiveHandler() {
-  //   dispatch(changeFavoriteOfferAction({hotelId: offer.id, isFavorite: !offer.isFavorite}));
-  // }
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const isAuth = useAppSelector(getAuthStatus);
+
+  function onClickFavoritesButton() {
+    if(isAuth === AuthorizationStatus.Auth) {
+      dispatch(changeFavoriteOfferAction({hotelId: offer.id, isFavorite: !offer.isFavorite}));
+      return;
+    }
+    navigate(AppRoute.Login);
+  }
 
   function offerMouseEnterHandler() {
     if(changeSetActive) {
@@ -49,7 +59,7 @@ function OfferCard ({offer, changeSetActive, classForCard, classForImageWrapper,
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''}`} type="button">
+          <button className={`place-card__bookmark-button button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''}`} type="button" onClick={onClickFavoritesButton}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
