@@ -30,6 +30,8 @@ function FavoritesOffers ({cities, offers}: FavoritesOffersProps) {
                       classForCard='favorites__card'
                       classForImageWrapper='favorites__image-wrapper'
                       classForCardInfo='favorites__card-info'
+                      widthForImage='150'
+                      heightForImage='110'
                     />
                   ))}
                 </div>
