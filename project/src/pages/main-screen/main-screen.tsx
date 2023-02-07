@@ -11,10 +11,12 @@ import MainEmpty from '../../components/main-empty/main-empty';
 import { getCity } from '../../store/user-action/selectors';
 import { getErrorMessage, getOffers } from '../../store/offers-data/selectors';
 import ErrorScreen from '../error-screen/error-screen';
+import { fetchOffersAction } from '../../store/api-actions';
 import { useLocation } from 'react-router-dom';
 import { changeCity } from '../../store/user-action/user-action';
 
 function MainScreen (): JSX.Element {
+
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
   const [currentSort, setCurrentSort] = useState<string>('Popular');
   const [sortedOffers, setSortedOffers] = useState<Offer[]>([]);
@@ -25,16 +27,20 @@ function MainScreen (): JSX.Element {
   const filteredOffers = useMemo(() => offersFromStore.filter((offer) => offer.city.name === currentCity), [offersFromStore, currentCity]);
   const isMainNotEmpty = filteredOffers.length;
 
-  const dispatch = useAppDispatch();
 
+  const dispatch = useAppDispatch();
   const {hash} = useLocation();
   if(hash) {
-    const cityFromLocation = hash.slice(1);
-    const shouldChangeCity = CITIES.find((city) => city.name === cityFromLocation);
+    const cityFromLocation = hash.slice(1).toLowerCase();
+    const shouldChangeCity = CITIES.find((city) => city.name.toLowerCase() === cityFromLocation) && cityFromLocation !== currentCity.toLowerCase();
     if(shouldChangeCity) {
       dispatch(changeCity(cityFromLocation));
     }
   }
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, []);
 
   const changeSetSort = (type: string) => {
     setCurrentSort(type);
@@ -88,7 +94,7 @@ function MainScreen (): JSX.Element {
                 <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
                 <SortOptions sortType={SortType} currentSort={currentSort} changeSetSort={changeSetSort}/>
                 <div className="cities__places-list places__list tabs__content">
-                  <OfferList offers={sortedOffers} onListItemHover={onListItemHover} classForCard='cities__place-card' classForImageWrapper='cities__image-wrapper'/>
+                  <OfferList offers={sortedOffers} onListItemHover={onListItemHover} classForCard='cities__place-card' classForImageWrapper='cities__image-wrapper' classForCardInfo='place-card__info' />
                 </div>
               </section>
               <div className="cities__right-section">

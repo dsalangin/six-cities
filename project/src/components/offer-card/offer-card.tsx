@@ -11,9 +11,11 @@ type OfferCardProps = {
   classForCard: string;
   classForImageWrapper: string;
   classForCardInfo: string;
+  widthForImage: string;
+  heightForImage: string;
 }
 
-function OfferCard ({offer, changeSetActive, classForCard, classForImageWrapper, classForCardInfo}: OfferCardProps): JSX.Element {
+function OfferCard ({offer, changeSetActive, classForCard, classForImageWrapper, classForCardInfo, widthForImage, heightForImage}: OfferCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -50,7 +52,7 @@ function OfferCard ({offer, changeSetActive, classForCard, classForImageWrapper,
       </div> }
       <div className={`${classForImageWrapper} place-card__image-wrapper`}>
         <Link to={`/offer/${offer.id}`}>
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={offer.previewImage} width={widthForImage} height={heightForImage} alt="Place image"/>
         </Link>
       </div>
       <div className={classForCardInfo}>

@@ -1,0 +1,22 @@
+.page {
+  display:  flex;
+  flex-direction: column;
+  min-height:  100vh;
+
+}
+
+.page__main--favorites {
+  flex-grow: 1;
+  display: flex;
+}
+
+.page__favorites-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.favorites {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}

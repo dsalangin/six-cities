@@ -25,6 +25,8 @@ function OfferList({offers, onListItemHover, classForCard, classForImageWrapper,
           classForCard={classForCard}
           classForImageWrapper={classForImageWrapper}
           classForCardInfo={classForCardInfo}
+          widthForImage='260'
+          heightForImage='200'
         />
       ))}
     </>

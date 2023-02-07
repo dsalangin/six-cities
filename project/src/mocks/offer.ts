@@ -4,7 +4,7 @@ const offers: Offer[] = [
   {
     bedrooms: 3,
     city: {
-      name: 'Amsterdam',
+      name: 'Cologne',
       location: {
         latitude: 52.370216,
         longitude: 4.895168,
@@ -39,7 +39,7 @@ const offers: Offer[] = [
   {
     bedrooms: 3,
     city: {
-      name: 'Amsterdam',
+      name: 'Cologne',
       location: {
         latitude: 52.370216,
         longitude: 4.895168,
@@ -159,7 +159,7 @@ const offers: Offer[] = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 4,
+    id: 5,
     images: ['img/1.png', 'img/2.png'],
     isFavorite: false,
     isPremium : false,
