@@ -21,7 +21,7 @@ function App(): JSX.Element {
             </FavoritePrivateRoute>
           }
         />
-        <Route path={`${AppRoute.Property}/:id`} element={<PropertyScreen />} />
+        <Route path={`${AppRoute.Property}/:hotelId`} element={<PropertyScreen />} />
         <Route path='*' element={<NotFoundScreen />} />
       </Routes>
     </BrowserRouter>

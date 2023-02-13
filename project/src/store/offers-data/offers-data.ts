@@ -3,7 +3,8 @@ import { NameSpace } from '../../const';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 import {fetchOffersAction, fetchCurrentOfferAction, fetchNearOffersAction,
-  fetchFavoriteOffersAction, fetchReviewsAction, changeFavoriteOfferAction} from '../api-actions';
+  fetchFavoriteOffersAction, fetchReviewsAction, changeFavoriteOfferAction,
+  addReviewAction} from '../api-actions';
 
 type Data = {
   offers: Offer[];
@@ -95,6 +96,10 @@ const OffersData = createSlice({
       })
       .addCase(fetchReviewsAction.fulfilled , (state, action) => {
         state.isReviewsLoading = false;
+        state.reviews = action.payload;
+      })
+
+      .addCase(addReviewAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
       })
 

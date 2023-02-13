@@ -13,7 +13,8 @@ import { getAuthStatus } from '../../store/user-process/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 function PropertyScreen(): JSX.Element {
-  const {id} = useParams();
+  const {hotelId} = useParams();
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -24,16 +25,16 @@ function PropertyScreen(): JSX.Element {
   const NearOffers = useAppSelector(getNearOffers);
 
   useEffect(() => {
-    if(id) {
-      dispatch(fetchCurrentOfferAction({hotelId: id}));
-      dispatch(fetchReviewsAction({hotelId: id}));
-      dispatch(fetchNearOffersAction({hotelId: id}));
+    if(hotelId) {
+      dispatch(fetchCurrentOfferAction({hotelId: hotelId}));
+      dispatch(fetchReviewsAction({hotelId: hotelId}));
+      dispatch(fetchNearOffersAction({hotelId: hotelId}));
     }
-  },[id]);
+  },[hotelId]);
 
   const onClickFavoritesButton = () => {
-    if(id) {
-      dispatch(changeFavoriteOfferAction({hotelId: +id, isFavorite: !currentOffer?.isFavorite}));
+    if(hotelId) {
+      dispatch(changeFavoriteOfferAction({hotelId: +hotelId, isFavorite: !currentOffer?.isFavorite}));
     }
   };
 
@@ -131,7 +132,7 @@ function PropertyScreen(): JSX.Element {
                     <ReviewList review={review} key={review.id} />
                   ))}
                 </ul>
-                <ReviewForm />
+                {isAuth === AuthorizationStatus.Auth && <ReviewForm hotelId={hotelId}/>}
               </section>
             </div>
           </div>

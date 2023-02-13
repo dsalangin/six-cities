@@ -13,7 +13,7 @@ enum APIRoute {
   Reviews = '/comments/{hotelId}',
   Property = '/hotels/{hotelId}',
   FavoriteOffers = '/favorite',
-  FavoriteOffer = '/favorite/{hotel_id}/{status}',
+  FavoriteOffer = '/favorite/{hotelId}/{status}',
 }
 
 enum AuthorizationStatus {

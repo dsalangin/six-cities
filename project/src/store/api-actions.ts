@@ -84,7 +84,7 @@ const changeFavoriteOfferAction = createAsyncThunk<Offer, FavoriteOfferData, {
 }>(
   'user/changeFavoriteOffer',
   async ({hotelId, isFavorite}, {dispatch ,extra: api}) => {
-    const {data} = await api.post<Offer>(APIRoute.FavoriteOffer.replace('{hotel_id}', String(hotelId)).replace('{status}', String(Number(isFavorite))));
+    const {data} = await api.post<Offer>(APIRoute.FavoriteOffer.replace('{hotelId}', String(hotelId)).replace('{status}', String(Number(isFavorite))));
     dispatch(changeFavoriteStatus({hotelId, isFavorite}));
     return data;
   }
@@ -105,14 +105,14 @@ const fetchReviewsAction = createAsyncThunk<Review[], {hotelId: string}, {
 );
 
 // POST /comments/: hotel_id
-const addReviewAction = createAsyncThunk<Review, ReviewData, {
+const addReviewAction = createAsyncThunk<Review[], ReviewData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/addReview',
   async ({rating, comment, hotelId}, {extra: api}) => {
-    const {data} = await api.post<Review>(APIRoute.Reviews.replace('{hotel_id}', hotelId), {rating, comment});
+    const {data} = await api.post<Review[]>(APIRoute.Reviews.replace('{hotelId}', hotelId), {rating, comment});
     return data;
   }
 );
