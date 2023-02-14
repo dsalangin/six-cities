@@ -12,11 +12,7 @@ type Data = {
   nearOffers: Offer[];
   favoriteOffers: Offer[];
   reviews: Review[];
-  isOffersDataLoading: boolean;
-  isCurrentOfferDataLoading: boolean;
-  isNearOffersDataLoading: boolean;
-  isFavoriteOffersDataLoading: boolean;
-  isReviewsLoading: boolean;
+  isDataLoading: boolean;
   errorMessage: undefined | string;
 };
 
@@ -26,11 +22,7 @@ const initialState: Data = {
   nearOffers: [],
   favoriteOffers: [],
   reviews: [],
-  isOffersDataLoading: false,
-  isCurrentOfferDataLoading: false,
-  isNearOffersDataLoading: false,
-  isFavoriteOffersDataLoading: false,
-  isReviewsLoading: false,
+  isDataLoading: false,
   errorMessage: undefined,
 };
 
@@ -56,51 +48,75 @@ const OffersData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending , (state,) => {
-        state.isOffersDataLoading = true;
+        state.isDataLoading = true;
       })
       .addCase(fetchOffersAction.fulfilled , (state, action) => {
-        state.isOffersDataLoading = false;
+        state.isDataLoading = false;
         state.offers = action.payload;
       })
       .addCase(fetchOffersAction.rejected , (state, action) => {
-        state.isOffersDataLoading = false;
+        state.isDataLoading = false;
         state.errorMessage = action.error.message;
       })
 
       .addCase(fetchCurrentOfferAction.pending , (state) => {
-        state.isCurrentOfferDataLoading = true;
+        state.isDataLoading = true;
       })
       .addCase(fetchCurrentOfferAction.fulfilled , (state, action) => {
-        state.isCurrentOfferDataLoading = false;
+        state.isDataLoading = false;
         state.currentOffer = action.payload;
+      })
+      .addCase(fetchCurrentOfferAction.rejected , (state, action) => {
+        state.isDataLoading = false;
+        state.errorMessage = action.error.message;
       })
 
       .addCase(fetchNearOffersAction.pending , (state) => {
-        state.isNearOffersDataLoading = true;
+        state.isDataLoading = true;
       })
       .addCase(fetchNearOffersAction.fulfilled , (state, action) => {
-        state.isNearOffersDataLoading = false;
+        state.isDataLoading = false;
         state.nearOffers = action.payload;
+      })
+      .addCase(fetchNearOffersAction.rejected , (state, action) => {
+        state.isDataLoading = false;
+        state.errorMessage = action.error.message;
       })
 
       .addCase(fetchFavoriteOffersAction.pending , (state) => {
-        state.isFavoriteOffersDataLoading = true;
+        state.isDataLoading = true;
       })
       .addCase(fetchFavoriteOffersAction.fulfilled , (state, action) => {
-        state.isFavoriteOffersDataLoading = false;
+        state.isDataLoading = false;
         state.favoriteOffers = action.payload;
+      })
+      .addCase(fetchFavoriteOffersAction.rejected , (state, action) => {
+        state.isDataLoading = false;
+        state.errorMessage = action.error.message;
       })
 
       .addCase(fetchReviewsAction.pending , (state) => {
-        state.isReviewsLoading = true;
+        state.isDataLoading = true;
       })
       .addCase(fetchReviewsAction.fulfilled , (state, action) => {
-        state.isReviewsLoading = false;
+        state.isDataLoading = false;
         state.reviews = action.payload;
       })
+      .addCase(fetchReviewsAction.rejected , (state, action) => {
+        state.isDataLoading = false;
+        state.errorMessage = action.error.message;
+      })
 
+      .addCase(addReviewAction.pending , (state, action) => {
+        state.isDataLoading = true;
+      })
       .addCase(addReviewAction.fulfilled, (state, action) => {
+        state.isDataLoading = false;
         state.reviews = action.payload;
+      })
+      .addCase(addReviewAction.rejected , (state, action) => {
+        state.isDataLoading = false;
+        state.errorMessage = action.error.message;
       })
 
       .addCase(changeFavoriteOfferAction.fulfilled , (state, action) => {
