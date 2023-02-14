@@ -10,7 +10,6 @@ import Header from '../../components/header/header';
 import MainEmpty from '../../components/main-empty/main-empty';
 import { getCity } from '../../store/user-action/selectors';
 import { getErrorMessage, getOffers } from '../../store/offers-data/selectors';
-import ErrorScreen from '../error-screen/error-screen';
 import { fetchOffersAction } from '../../store/api-actions';
 import { useLocation } from 'react-router-dom';
 import { changeCity } from '../../store/user-action/user-action';
@@ -68,11 +67,6 @@ function MainScreen (): JSX.Element {
     const currentPoint = filteredOffers.find((offer) => offer.id === listItemId);
     setSelectedOffer(currentPoint);
   };
-
-  const error = useAppSelector(getErrorMessage);
-  if(error) {
-    return <ErrorScreen error={error} />;
-  }
 
   return (
     <div className="page page--gray page--main">
