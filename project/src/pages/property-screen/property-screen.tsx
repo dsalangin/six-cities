@@ -150,7 +150,7 @@ function PropertyScreen(): JSX.Element {
         </main>
       </div>
     </>
-    );
+  );
 }
 
 export default PropertyScreen;

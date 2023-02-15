@@ -9,10 +9,11 @@ import SortOptions from '../../components/sort-options/sort-options';
 import Header from '../../components/header/header';
 import MainEmpty from '../../components/main-empty/main-empty';
 import { getCity } from '../../store/user-action/selectors';
-import { getErrorMessage, getOffers } from '../../store/offers-data/selectors';
+import { getDataLoadingStatus, getOffers } from '../../store/offers-data/selectors';
 import { fetchOffersAction } from '../../store/api-actions';
 import { useLocation } from 'react-router-dom';
 import { changeCity } from '../../store/user-action/user-action';
+import Spinner from '../../components/spinner/spinner';
 
 function MainScreen (): JSX.Element {
 
@@ -22,6 +23,7 @@ function MainScreen (): JSX.Element {
 
   const offersFromStore = useAppSelector(getOffers);
   const currentCity = useAppSelector(getCity);
+  const isDataLoading = useAppSelector(getDataLoadingStatus);
   const [filteredCity] = CITIES.filter((city) => city.name === currentCity);
   const filteredOffers = useMemo(() => offersFromStore.filter((offer) => offer.city.name === currentCity), [offersFromStore, currentCity]);
   const isMainNotEmpty = filteredOffers.length;
@@ -69,38 +71,41 @@ function MainScreen (): JSX.Element {
   };
 
   return (
-    <div className="page page--gray page--main">
+    <>
+      {isDataLoading && <Spinner/>}
+      <div className="page page--gray page--main">
 
-      <Header />
+        <Header />
 
-      <main className={`page__main page__main--index ${!isMainNotEmpty ? 'page__main--index-empty' : ''}`}>
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <CitiesList cities={CITIES}/>
-          </section>
-        </div>
-        {isMainNotEmpty ?
-          <div className="cities">
-            <div className="cities__places-container container">
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
-                <SortOptions sortType={SortType} currentSort={currentSort} changeSetSort={changeSetSort}/>
-                <div className="cities__places-list places__list tabs__content">
-                  <OfferList offers={sortedOffers} onListItemHover={onListItemHover} classForCard='cities__place-card' classForImageWrapper='cities__image-wrapper' classForCardInfo='place-card__info' />
-                </div>
-              </section>
-              <div className="cities__right-section">
-                <section className="cities__map map">
-                  <Map city={filteredCity} offers={filteredOffers} currentOffer={selectedOffer}/>
+        <main className={`page__main page__main--index ${!isMainNotEmpty ? 'page__main--index-empty' : ''}`}>
+          <h1 className="visually-hidden">Cities</h1>
+          <div className="tabs">
+            <section className="locations container">
+              <CitiesList cities={CITIES}/>
+            </section>
+          </div>
+          {isMainNotEmpty ?
+            <div className="cities">
+              <div className="cities__places-container container">
+                <section className="cities__places places">
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
+                  <SortOptions sortType={SortType} currentSort={currentSort} changeSetSort={changeSetSort}/>
+                  <div className="cities__places-list places__list tabs__content">
+                    <OfferList offers={sortedOffers} onListItemHover={onListItemHover} classForCard='cities__place-card' classForImageWrapper='cities__image-wrapper' classForCardInfo='place-card__info' />
+                  </div>
                 </section>
+                <div className="cities__right-section">
+                  <section className="cities__map map">
+                    <Map city={filteredCity} offers={filteredOffers} currentOffer={selectedOffer}/>
+                  </section>
+                </div>
               </div>
-            </div>
-          </div> :
-          <MainEmpty />}
-      </main>
-    </div>
+            </div> :
+            <MainEmpty />}
+        </main>
+      </div>
+    </>
   );
 }
 
