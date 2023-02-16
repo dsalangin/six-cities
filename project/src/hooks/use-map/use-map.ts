@@ -1,25 +1,29 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {useState, useEffect, useRef, MutableRefObject} from 'react';
-import {City} from '../../types/city';
+import { useState, useEffect, useRef, MutableRefObject } from 'react';
+import { City } from '../../types/city';
 
-//useState добавит состояние для нашего пользовательского хука
-//useEffect — возможность применять побочные эффекты
-//useRef поможет защититься от повторной инициализации карты.
 
 type UseMapProps = {
   mapRef: MutableRefObject<HTMLElement | null>;
   city: City;
 }
 
-function useMap ({mapRef, city}: UseMapProps) {
+function useMap({ mapRef, city }: UseMapProps) {
 
   const [map, setMap] = useState<leaflet.Map | null>(null);
   const isRenderRef = useRef(false);
 
   useEffect(() => {
-    if(mapRef.current && !isRenderRef.current) {
-      const instance = leaflet.map(mapRef.current).setView([city.location.latitude, city.location.longitude], city.location.zoom);
+    if (mapRef.current && !isRenderRef.current) {
+
+      const instance = leaflet.map(mapRef.current, {
+        center: {
+          lat: city.location.latitude,
+          lng: city.location.longitude,
+        },
+        zoom: city.location.zoom,
+      });
 
       leaflet.tileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
