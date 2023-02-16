@@ -3,7 +3,7 @@ import OfferList from '../../components/offer-list/offer-list';
 import {Offer} from '../../types/offer';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
-import {CITIES, SortType} from '../../const';
+import {AuthorizationStatus, CITIES, SortType} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import SortOptions from '../../components/sort-options/sort-options';
 import Header from '../../components/header/header';
@@ -14,6 +14,7 @@ import { fetchFavoriteOffersAction, fetchOffersAction } from '../../store/api-ac
 import { useLocation } from 'react-router-dom';
 import { changeCity } from '../../store/user-action/user-action';
 import Spinner from '../../components/spinner/spinner';
+import { getAuthStatus } from '../../store/user-process/selectors';
 
 function MainScreen (): JSX.Element {
 
@@ -21,6 +22,7 @@ function MainScreen (): JSX.Element {
   const [currentSort, setCurrentSort] = useState<string>('Popular');
   const [sortedOffers, setSortedOffers] = useState<Offer[]>([]);
 
+  const isAuth = useAppSelector(getAuthStatus);
   const offersFromStore = useAppSelector(getOffers);
   const currentCity = useAppSelector(getCity);
   const isDataLoading = useAppSelector(getDataLoadingStatus);
@@ -41,7 +43,7 @@ function MainScreen (): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOffersAction());
-    dispatch(fetchFavoriteOffersAction());
+    isAuth === AuthorizationStatus.Auth && dispatch(fetchFavoriteOffersAction());
   }, []);
 
   const changeSetSort = (type: string) => {
