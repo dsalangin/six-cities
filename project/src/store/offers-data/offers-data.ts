@@ -29,22 +29,7 @@ const initialState: Data = {
 const OffersData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {
-    changeFavoriteStatus: (state, action) => {
-      const currentOfferFromStore = state.currentOffer;
-      const changedOffer = state.offers.find((offer) => offer.id === action.payload.hotelId);
-
-      if(currentOfferFromStore) {
-        if(currentOfferFromStore.id === changedOffer?.id) {
-          currentOfferFromStore.isFavorite = action.payload.isFavorite;
-        }
-      }
-
-      if(changedOffer) {
-        changedOffer.isFavorite = action.payload.isFavorite;
-      }
-    }
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending , (state,) => {
@@ -120,21 +105,14 @@ const OffersData = createSlice({
       })
 
       .addCase(changeFavoriteOfferAction.fulfilled , (state, action) => {
-        const currentOfferIndex = state.favoriteOffers.findIndex((offer) => offer.id === action.payload.id);
-        if(currentOfferIndex > -1) {
-          state.favoriteOffers[currentOfferIndex] = action.payload;
-          state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.isFavorite);
-        } else {
-          state.favoriteOffers.push(action.payload);
-        }
-        const nearOfferIndex = state.nearOffers.findIndex((offer) => offer.id === action.payload.id);
-        if(nearOfferIndex > -1) {
-          state.nearOffers[nearOfferIndex] = action.payload;
-        }
+        state.favoriteOffers = action.payload;
+      })
+      .addCase(changeFavoriteOfferAction.rejected , (state, action) => {
+        state.errorMessage = action.error.message;
       });
   },
 
 });
 
 export {OffersData};
-export const {changeFavoriteStatus} = OffersData.actions;
+// export const {changeFavoriteStatus} = OffersData.actions;

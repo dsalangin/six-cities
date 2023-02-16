@@ -10,7 +10,7 @@ import Header from '../../components/header/header';
 import MainEmpty from '../../components/main-empty/main-empty';
 import { getCity } from '../../store/user-action/selectors';
 import { getDataLoadingStatus, getOffers } from '../../store/offers-data/selectors';
-import { fetchOffersAction } from '../../store/api-actions';
+import { fetchFavoriteOffersAction, fetchOffersAction } from '../../store/api-actions';
 import { useLocation } from 'react-router-dom';
 import { changeCity } from '../../store/user-action/user-action';
 import Spinner from '../../components/spinner/spinner';
@@ -41,6 +41,7 @@ function MainScreen (): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOffersAction());
+    dispatch(fetchFavoriteOffersAction());
   }, []);
 
   const changeSetSort = (type: string) => {

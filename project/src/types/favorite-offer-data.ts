@@ -1,6 +1,6 @@
 type FavoriteOfferData = {
   hotelId: number;
-  isFavorite: boolean;
+  isFavorite: number;
 }
 
 export type {FavoriteOfferData};

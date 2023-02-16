@@ -1,22 +1,22 @@
 import ReviewForm from '../../components/review-form/review-form';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {useParams, useNavigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Header from '../../components/header/header';
 import { useEffect } from 'react';
-import { fetchCurrentOfferAction, fetchNearOffersAction, fetchReviewsAction, changeFavoriteOfferAction } from '../../store/api-actions';
+import { fetchCurrentOfferAction, fetchNearOffersAction, fetchReviewsAction } from '../../store/api-actions';
 import { getCurrentOffer, getDataLoadingStatus, getNearOffers } from '../../store/offers-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import ReviewList from '../../components/review-list/review-list';
 import Spinner from '../../components/spinner/spinner';
+import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 
 function PropertyScreen(): JSX.Element {
   const {hotelId} = useParams();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const isAuth = useAppSelector(getAuthStatus);
   const currentOffer = useAppSelector(getCurrentOffer);
   const nearOffers = useAppSelector(getNearOffers);
@@ -34,11 +34,6 @@ function PropertyScreen(): JSX.Element {
     window.scroll({left: 0, top: 0,});
   }, [hotelId]);
 
-  const onClickFavoritesButton = () => {
-    if(hotelId) {
-      dispatch(changeFavoriteOfferAction({hotelId: +hotelId, isFavorite: !currentOffer?.isFavorite}));
-    }
-  };
 
   if(!currentOffer) {
     return <NotFoundScreen />;
@@ -70,12 +65,7 @@ function PropertyScreen(): JSX.Element {
                   <h1 className="property__name">
                     {currentOffer.title}
                   </h1>
-                  <button className={`property__bookmark-button button ${currentOffer.isFavorite ? 'property__bookmark-button--active' : ''}`} type="button" onClick={() => isAuth === AuthorizationStatus.Auth ? onClickFavoritesButton() : navigate(AppRoute.Login)}>
-                    <svg className="property__bookmark-icon" width="31" height="33">
-                      <use xlinkHref="#icon-bookmark"></use>
-                    </svg>
-                    <span className="visually-hidden">To bookmarks</span>
-                  </button>
+                  <BookmarkButton hotelId={currentOffer.id} isPropertyPage />
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">

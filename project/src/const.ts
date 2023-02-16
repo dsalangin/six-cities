@@ -86,4 +86,9 @@ enum NameSpace {
   User = 'USER',
 }
 
-export {AppRoute, APIRoute, AuthorizationStatus, CITIES, SortType, NameSpace};
+enum BookmarkAction {
+  Add = 1,
+  Delete = 0,
+}
+
+export {AppRoute, APIRoute, AuthorizationStatus, CITIES, SortType, NameSpace, BookmarkAction};

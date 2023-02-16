@@ -2,7 +2,6 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
 import { dropToken, saveToken } from '../services/token';
-import {changeFavoriteStatus} from './offers-data/offers-data';
 import { AppDispatch, State } from '../types/store';
 import { Offer } from '../types/offer';
 import { Review } from '../types/review';
@@ -77,15 +76,15 @@ const fetchFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
 // Response:
 // — Status: 200 OK
 // —Body:структура Hotel с актуальным состоянием поля isfavorite
-const changeFavoriteOfferAction = createAsyncThunk<Offer, FavoriteOfferData, {
+const changeFavoriteOfferAction = createAsyncThunk<Offer[], FavoriteOfferData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/changeFavoriteOffer',
   async ({hotelId, isFavorite}, {dispatch ,extra: api}) => {
-    const {data} = await api.post<Offer>(APIRoute.FavoriteOffer.replace('{hotelId}', String(hotelId)).replace('{status}', String(Number(isFavorite))));
-    dispatch(changeFavoriteStatus({hotelId, isFavorite}));
+    await api.post<Offer>(APIRoute.FavoriteOffer.replace('{hotelId}', String(hotelId)).replace('{status}', String(isFavorite)));
+    const {data} = await api.get<Offer[]>(APIRoute.FavoriteOffers);
     return data;
   }
 );
@@ -103,6 +102,7 @@ const fetchReviewsAction = createAsyncThunk<Review[], {hotelId: string}, {
     return data;
   }
 );
+
 
 // POST /comments/: hotel_id
 const addReviewAction = createAsyncThunk<Review[], ReviewData, {
