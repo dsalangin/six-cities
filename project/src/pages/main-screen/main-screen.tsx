@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom';
 import { changeCity } from '../../store/user-action/user-action';
 import Spinner from '../../components/spinner/spinner';
 import { getAuthStatus } from '../../store/user-process/selectors';
+import './main-screen.css';
 
 function MainScreen (): JSX.Element {
 
