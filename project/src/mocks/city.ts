@@ -1,4 +1,4 @@
-import {City} from '../types/city';
+// import {City} from '../types/city';
 
 const CITY = {
   title: 'Amsterdam',

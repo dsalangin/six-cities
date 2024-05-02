@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NameSpace } from "../../const";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NameSpace } from '../../const';
 
 type UserActionState = {
   city: string;
@@ -7,7 +7,7 @@ type UserActionState = {
 
 const initialState: UserActionState = {
   city: 'Paris',
-}
+};
 
 const userAction = createSlice({
   name: NameSpace.Action,

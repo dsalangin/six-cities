@@ -32,40 +32,42 @@ const initialState: initialStateType = {
   OffersByServ: [],
 };
 
-const reducer = createReducer(initialState, (builder) => {
+const {log} = console;
+
+export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(fetchOffersAction.pending , (_state, action) => {
-      console.log(action)
+      log(action);
     })
     .addCase(fetchOffersAction.fulfilled , (state, action) => {
-      console.log(action);
+      log(action);
       state.offers = action.payload;
     })
     .addCase(fetchOffersAction.rejected , (_state, action) => {
-      console.log(action);
+      log(action);
     })
 
 
     .addCase(fetchReviewsAction.pending , (_state, action) => {
-      console.log(action)
+      log(action);
     })
     .addCase(fetchReviewsAction.fulfilled , (state, action) => {
-      console.log(action);
+      log(action);
       state.reviews = action.payload;
     })
     .addCase(fetchReviewsAction.rejected , (_state, action) => {
-      console.log(action);
+      log(action);
     })
 
     .addCase(checkAuthAction.pending , (_state, action) => {
-      console.log(action)
+      log(action);
     })
     .addCase(checkAuthAction.fulfilled , (state, action) => {
-      console.log(action);
+      log(action);
       // state.authorizationStatus = action.payload;
     })
     .addCase(checkAuthAction.rejected , (_state, action) => {
-      console.log(action);
+      log(action);
     })
 
     .addCase(changeCity, (state, action) => {

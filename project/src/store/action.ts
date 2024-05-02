@@ -9,5 +9,5 @@ const setNearOffers = createAction<Offer[]>('offers/setNearOffers');
 const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 const setNearOffersDataLoadingStatus = createAction<boolean>('offers/setNearOffersDataLoadingStatus');
 
-export {changeCity, setOffers,  setOffersDataLoadingStatus, setNearOffersDataLoadingStatus, setNearOffers};
+export {changeCity, setOffers, setOffersDataLoadingStatus, setNearOffersDataLoadingStatus, setNearOffers};
 // requireAuthorization

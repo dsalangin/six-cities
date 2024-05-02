@@ -1,7 +1,7 @@
-import { NameSpace } from "../../const"
-import { Offer } from "../../types/offer"
-import { Review } from "../../types/review";
-import { State } from "../../types/store"
+import { NameSpace } from '../../const';
+import { Offer } from '../../types/offer';
+import { Review } from '../../types/review';
+import { State } from '../../types/store';
 
 
 const getOffers = (state: State): Offer[] => state[NameSpace.Data].offers;
